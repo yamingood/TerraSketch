@@ -15,4 +15,8 @@ urlpatterns = [
     
     # Analyse terrain
     path('<uuid:project_id>/analyze-terrain/', views.analyze_terrain, name='analyze_terrain'),
+    
+    # Génération IA
+    path('<uuid:project_id>/generate/', views.generate_ai_plan, name='generate_ai_plan'),
+    path('<uuid:project_id>/generate/<uuid:job_id>/', views.generation_status, name='generation_status'),
 ]

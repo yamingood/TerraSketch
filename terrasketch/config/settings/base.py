@@ -173,7 +173,7 @@ CELERY_TIMEZONE = TIME_ZONE
 ANTHROPIC_API_KEY = config('ANTHROPIC_API_KEY', default='')
 
 # AI Configuration
-AI_MODEL = config('AI_MODEL', default='claude-3-5-sonnet-20241022')
+AI_MODEL = config('AI_MODEL', default='claude-sonnet-4-6')
 AI_MAX_TOKENS = config('AI_MAX_TOKENS', default=4096, cast=int)
 AI_MAX_RETRIES = config('AI_MAX_RETRIES', default=2, cast=int)
 AI_TIMEOUT_SECONDS = config('AI_TIMEOUT_SECONDS', default=120, cast=int)

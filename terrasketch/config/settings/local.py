@@ -35,7 +35,9 @@ CACHES = {
 
 # Logs plus détaillés en développement
 LOGGING['loggers']['terrasketch']['level'] = 'DEBUG'
-LOGGING['loggers']['django.db.backends']['level'] = 'DEBUG'
+# Configuration safe pour django.db.backends
+if 'django.db.backends' in LOGGING['loggers']:
+    LOGGING['loggers']['django.db.backends']['level'] = 'DEBUG'
 
 # CORS permissif pour développement
 CORS_ALLOW_ALL_ORIGINS = True
