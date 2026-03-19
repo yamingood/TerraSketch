@@ -1,0 +1,1 @@
+# Plan Generator module for TerraSketch AI

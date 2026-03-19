@@ -1,0 +1,32 @@
+# Django Core
+Django>=5.0,<6.0
+djangorestframework>=3.15,<4.0
+djangorestframework-simplejwt>=5.3,<6.0
+django-cors-headers>=4.3,<5.0
+
+# Database (SQLite pour dev, PostGIS pour prod)
+django-environ>=0.11,<1.0
+
+# Celery
+celery>=5.3,<6.0
+redis>=5.0,<6.0
+django-celery-beat>=2.6,<3.0
+
+# API integrations
+anthropic>=0.25,<1.0
+stripe>=9.5,<10.0
+requests>=2.31,<3.0
+
+# Authentication & Security
+django-otp>=1.5,<2.0
+python-decouple>=3.8,<4.0
+
+# Development & Testing
+pytest-django>=4.8,<5.0
+black>=24.0,<25.0
+isort>=5.13,<6.0
+django-extensions>=3.2,<4.0
+
+# Other utilities
+python-dateutil>=2.9,<3.0
+pytz>=2024.1
