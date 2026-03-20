@@ -57,3 +57,6 @@ LOGGING = {
         'level': 'INFO',
     },
 }
+
+# Configuration IGN
+IGN_ENRICHMENT_ENABLED = True

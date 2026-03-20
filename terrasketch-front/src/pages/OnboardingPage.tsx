@@ -175,10 +175,24 @@ const OnboardingPage: React.FC = () => {
     setCurrentStep(2);
   };
 
-  const handleSubmit = () => {
-    // Ici on créerait le projet avec les données collectées
-    console.log('Projet à créer:', projectData);
-    navigate('/dashboard');
+  const handleSubmit = async () => {
+    try {
+      // Créer le projet avec les données collectées
+      console.log('Projet à créer:', projectData);
+      
+      // TODO: Appel API pour créer le projet
+      // const response = await fetch('/api/projects', {
+      //   method: 'POST',
+      //   headers: { 'Content-Type': 'application/json' },
+      //   body: JSON.stringify(projectData)
+      // });
+      
+      // Redirection vers la page d'accueil (pour éviter le problème d'import temporairement)
+      navigate('/');
+    } catch (error) {
+      console.error('Erreur lors de la création du projet:', error);
+      // TODO: Afficher une notification d'erreur
+    }
   };
 
   const downloadSampleFile = () => {
@@ -468,6 +482,16 @@ const OnboardingPage: React.FC = () => {
           </div>
         )}
       </main>
+      
+      {/* Bouton de test pour la page de visualisation */}
+      <div className="fixed bottom-4 right-4">
+        <button
+          onClick={() => navigate('/plan/demo-plan')}
+          className="bg-blue-600 text-white px-4 py-2 rounded-lg shadow-lg hover:bg-blue-700 transition-colors text-sm"
+        >
+          🧪 Test Visualisation
+        </button>
+      </div>
     </div>
   );
 };

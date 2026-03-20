@@ -3,6 +3,8 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 import OnboardingPage from './pages/OnboardingPage';
+import PlanVisualizationPage from './pages/PlanVisualizationPage';
+// import DashboardPage from './pages/dashboard/DashboardPage'; // Temporairement désactivé à cause d'un problème d'import
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -21,6 +23,12 @@ const App: React.FC = () => {
           <Routes>
             {/* Page d'onboarding comme point d'entrée principal */}
             <Route path="/onboarding" element={<OnboardingPage />} />
+            
+            {/* Page dashboard (accueil) - temporairement désactivée */}
+            {/* <Route path="/dashboard" element={<DashboardPage />} /> */}
+            
+            {/* Page de visualisation des plans */}
+            <Route path="/plan/:planId" element={<PlanVisualizationPage />} />
             
             {/* Redirection de toutes les routes vers onboarding */}
             <Route path="/" element={<Navigate to="/onboarding" replace />} />

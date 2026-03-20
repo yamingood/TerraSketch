@@ -26,6 +26,9 @@ def create_plant_families():
         {"name_fr": "Paeoniacées", "name_latin": "Paeoniaceae"},
         {"name_fr": "Onagracées", "name_latin": "Onagraceae"},
         {"name_fr": "Renonculacées", "name_latin": "Ranunculaceae"},
+        {"name_fr": "Aracées", "name_latin": "Araceae"},
+        {"name_fr": "Palmiers", "name_latin": "Arecaceae"},
+        {"name_fr": "Hibiscus", "name_latin": "Malvaceae"},
     ]
     
     created_families = {}
@@ -67,233 +70,269 @@ def create_essential_plants(plant_families):
             "is_invasive": False
         },
         {
-            "name": "Olivier",
-            "scientific_name": "Olea europaea", 
-            "category": "arbres",
+            "name_common_fr": "Olivier",
+            "name_latin": "Olea europaea",
+            "family": plant_families["Oleaceae"],
+            "type": "tree",
             "climate_zones": ["Méditerranéen", "Tropical"],
-            "hardiness_zone": 8,
-            "height_min": 3.0,
-            "height_max": 10.0,
-            "spread_min": 3.0,
-            "spread_max": 8.0,
-            "soil_ph_min": 6.5,
-            "soil_ph_max": 8.0,
-            "water_needs": "low",
+            "height_adult_min_cm": 300,
+            "height_adult_max_cm": 1000,
+            "width_adult_min_cm": 300,
+            "width_adult_max_cm": 800,
+            "water_need": "low",
             "sun_exposure": "full_sun",
-            "maintenance_level": "low",
-            "bloom_period": "spring",
-            "foliage_color": "green,silver",
-            "is_native": True,
-            "price_range": "high"
+            "growth_rate": "slow",
+            "foliage": "evergreen",
+            "flowering_months": [4, 5],
+            "flowering_color": "blanc",
+            "frost_resistance_min_c": -10,
+            "soil_preference": {"ph_min": 6.5, "ph_max": 8.0, "type": "calcaire"},
+            "is_drought_resistant": True,
+            "attracts_pollinators": True,
+            "is_invasive": False
         },
         {
-            "name": "Bouleau",
-            "scientific_name": "Betula pendula",
-            "category": "arbres", 
+            "name_common_fr": "Bouleau",
+            "name_latin": "Betula pendula",
+            "family": plant_families["Betulaceae"],
+            "type": "tree",
             "climate_zones": ["Atlantique", "Continental", "Montagnard"],
-            "hardiness_zone": 3,
-            "height_min": 8.0,
-            "height_max": 20.0,
-            "spread_min": 4.0,
-            "spread_max": 8.0,
-            "soil_ph_min": 5.5,
-            "soil_ph_max": 7.0,
-            "water_needs": "medium",
+            "height_adult_min_cm": 800,
+            "height_adult_max_cm": 2000,
+            "width_adult_min_cm": 400,
+            "width_adult_max_cm": 800,
+            "water_need": "moderate",
             "sun_exposure": "full_sun",
-            "maintenance_level": "low",
-            "bloom_period": "spring",
-            "foliage_color": "green,yellow",
-            "is_native": True,
-            "price_range": "medium"
+            "growth_rate": "fast",
+            "foliage": "deciduous",
+            "flowering_months": [3, 4],
+            "flowering_color": "jaune",
+            "frost_resistance_min_c": -25,
+            "soil_preference": {"ph_min": 5.5, "ph_max": 7.0, "type": "neutre"},
+            "is_drought_resistant": False,
+            "attracts_pollinators": True,
+            "is_invasive": False
         },
         
         # ARBUSTES
         {
-            "name": "Lavande",
-            "scientific_name": "Lavandula angustifolia",
-            "category": "arbustes",
+            "name_common_fr": "Lavande",
+            "name_latin": "Lavandula angustifolia",
+            "family": plant_families["Lamiaceae"],
+            "type": "shrub",
             "climate_zones": ["Méditerranéen", "Atlantique"],
-            "hardiness_zone": 5,
-            "height_min": 0.5,
-            "height_max": 1.0,
-            "spread_min": 0.8,
-            "spread_max": 1.2,
-            "soil_ph_min": 6.5,
-            "soil_ph_max": 8.0,
-            "water_needs": "low",
+            "height_adult_min_cm": 50,
+            "height_adult_max_cm": 100,
+            "width_adult_min_cm": 80,
+            "width_adult_max_cm": 120,
+            "water_need": "low",
             "sun_exposure": "full_sun",
-            "maintenance_level": "low",
-            "bloom_period": "summer",
-            "foliage_color": "silver,green",
-            "is_native": True,
-            "price_range": "low"
+            "growth_rate": "moderate",
+            "foliage": "evergreen",
+            "flowering_months": [6, 7, 8],
+            "flowering_color": "violet",
+            "frost_resistance_min_c": -15,
+            "soil_preference": {"ph_min": 6.5, "ph_max": 8.0, "type": "calcaire"},
+            "is_drought_resistant": True,
+            "attracts_pollinators": True,
+            "is_invasive": False
         },
         {
-            "name": "Hortensia",
-            "scientific_name": "Hydrangea macrophylla",
-            "category": "arbustes",
+            "name_common_fr": "Hortensia",
+            "name_latin": "Hydrangea macrophylla",
+            "family": plant_families["Hydrangeaceae"],
+            "type": "shrub",
             "climate_zones": ["Atlantique", "Continental"],
-            "hardiness_zone": 6,
-            "height_min": 1.0,
-            "height_max": 2.0,
-            "spread_min": 1.0,
-            "spread_max": 2.0,
-            "soil_ph_min": 5.0,
-            "soil_ph_max": 7.0,
-            "water_needs": "high",
+            "height_adult_min_cm": 100,
+            "height_adult_max_cm": 200,
+            "width_adult_min_cm": 100,
+            "width_adult_max_cm": 200,
+            "water_need": "high",
             "sun_exposure": "partial_shade",
-            "maintenance_level": "medium",
-            "bloom_period": "summer",
-            "foliage_color": "green",
-            "is_native": False,
-            "price_range": "medium"
+            "growth_rate": "moderate",
+            "foliage": "deciduous",
+            "flowering_months": [6, 7, 8, 9],
+            "flowering_color": "bleu,rose",
+            "frost_resistance_min_c": -15,
+            "soil_preference": {"ph_min": 5.0, "ph_max": 7.0, "type": "acide"},
+            "is_drought_resistant": False,
+            "attracts_pollinators": False,
+            "is_invasive": False
         },
         {
-            "name": "Buis",
-            "scientific_name": "Buxus sempervirens",
-            "category": "arbustes",
+            "name_common_fr": "Buis",
+            "name_latin": "Buxus sempervirens",
+            "family": plant_families["Buxaceae"],
+            "type": "shrub",
             "climate_zones": ["Atlantique", "Continental", "Méditerranéen"],
-            "hardiness_zone": 6,
-            "height_min": 0.5,
-            "height_max": 3.0,
-            "spread_min": 0.5,
-            "spread_max": 2.0,
-            "soil_ph_min": 6.0,
-            "soil_ph_max": 8.0,
-            "water_needs": "medium",
-            "sun_exposure": "partial_sun",
-            "maintenance_level": "high",
-            "bloom_period": "spring",
-            "foliage_color": "green",
-            "is_native": True,
-            "price_range": "medium"
+            "height_adult_min_cm": 50,
+            "height_adult_max_cm": 300,
+            "width_adult_min_cm": 50,
+            "width_adult_max_cm": 200,
+            "water_need": "moderate",
+            "sun_exposure": "partial_shade",
+            "growth_rate": "slow",
+            "foliage": "evergreen",
+            "flowering_months": [3, 4],
+            "flowering_color": "vert",
+            "frost_resistance_min_c": -15,
+            "soil_preference": {"ph_min": 6.0, "ph_max": 8.0, "type": "neutre"},
+            "is_drought_resistant": False,
+            "attracts_pollinators": False,
+            "is_invasive": False
         },
         
         # VIVACES
         {
-            "name": "Pivoine",
-            "scientific_name": "Paeonia lactiflora",
-            "category": "vivaces",
+            "name_common_fr": "Pivoine",
+            "name_latin": "Paeonia lactiflora",
+            "family": plant_families["Paeoniaceae"],
+            "type": "perennial",
             "climate_zones": ["Atlantique", "Continental", "Montagnard"],
-            "hardiness_zone": 3,
-            "height_min": 0.6,
-            "height_max": 1.0,
-            "spread_min": 0.6,
-            "spread_max": 0.8,
-            "soil_ph_min": 6.0,
-            "soil_ph_max": 7.5,
-            "water_needs": "medium",
+            "height_adult_min_cm": 60,
+            "height_adult_max_cm": 100,
+            "width_adult_min_cm": 60,
+            "width_adult_max_cm": 80,
+            "water_need": "moderate",
             "sun_exposure": "full_sun",
-            "maintenance_level": "low",
-            "bloom_period": "late_spring",
-            "foliage_color": "green",
-            "is_native": False,
-            "price_range": "high"
+            "growth_rate": "slow",
+            "foliage": "deciduous",
+            "flowering_months": [5, 6],
+            "flowering_color": "rose,blanc",
+            "frost_resistance_min_c": -25,
+            "soil_preference": {"ph_min": 6.0, "ph_max": 7.5, "type": "neutre"},
+            "is_drought_resistant": False,
+            "attracts_pollinators": True,
+            "is_invasive": False
         },
         {
-            "name": "Gaura",
-            "scientific_name": "Gaura lindheimeri",
-            "category": "vivaces",
+            "name_common_fr": "Gaura",
+            "name_latin": "Gaura lindheimeri",
+            "family": plant_families["Onagraceae"],
+            "type": "perennial",
             "climate_zones": ["Atlantique", "Méditerranéen"],
-            "hardiness_zone": 6,
-            "height_min": 0.8,
-            "height_max": 1.2,
-            "spread_min": 0.6,
-            "spread_max": 1.0,
-            "soil_ph_min": 6.0,
-            "soil_ph_max": 8.0,
-            "water_needs": "low",
+            "height_adult_min_cm": 80,
+            "height_adult_max_cm": 120,
+            "width_adult_min_cm": 60,
+            "width_adult_max_cm": 100,
+            "water_need": "low",
             "sun_exposure": "full_sun",
-            "maintenance_level": "low",
-            "bloom_period": "summer",
-            "foliage_color": "green",
-            "is_native": False,
-            "price_range": "low"
-        },
-        
-        # AROMATIQUES
-        {
-            "name": "Romarin",
-            "scientific_name": "Rosmarinus officinalis",
-            "category": "aromatiques",
-            "climate_zones": ["Méditerranéen", "Atlantique"],
-            "hardiness_zone": 7,
-            "height_min": 0.5,
-            "height_max": 1.5,
-            "spread_min": 0.8,
-            "spread_max": 1.2,
-            "soil_ph_min": 6.0,
-            "soil_ph_max": 8.0,
-            "water_needs": "low",
-            "sun_exposure": "full_sun",
-            "maintenance_level": "low",
-            "bloom_period": "spring",
-            "foliage_color": "green,silver",
-            "is_native": True,
-            "price_range": "low"
-        },
-        {
-            "name": "Basilic",
-            "scientific_name": "Ocimum basilicum",
-            "category": "aromatiques",
-            "climate_zones": ["Méditerranéen", "Atlantique", "Continental", "Tropical"],
-            "hardiness_zone": 9,
-            "height_min": 0.2,
-            "height_max": 0.6,
-            "spread_min": 0.3,
-            "spread_max": 0.5,
-            "soil_ph_min": 6.0,
-            "soil_ph_max": 7.0,
-            "water_needs": "medium",
-            "sun_exposure": "full_sun",
-            "maintenance_level": "medium",
-            "bloom_period": "summer",
-            "foliage_color": "green",
-            "is_native": False,
-            "price_range": "low"
+            "growth_rate": "fast",
+            "foliage": "deciduous",
+            "flowering_months": [6, 7, 8, 9],
+            "flowering_color": "blanc,rose",
+            "frost_resistance_min_c": -10,
+            "soil_preference": {"ph_min": 6.0, "ph_max": 8.0, "type": "neutre"},
+            "is_drought_resistant": True,
+            "attracts_pollinators": True,
+            "is_invasive": False
         },
         
         # GRIMPANTES
         {
-            "name": "Clématite",
-            "scientific_name": "Clematis montana",
-            "category": "grimpantes",
+            "name_common_fr": "Clématite",
+            "name_latin": "Clematis montana",
+            "family": plant_families["Ranunculaceae"],
+            "type": "climber",
             "climate_zones": ["Atlantique", "Continental"],
-            "hardiness_zone": 6,
-            "height_min": 3.0,
-            "height_max": 8.0,
-            "spread_min": 2.0,
-            "spread_max": 4.0,
-            "soil_ph_min": 6.0,
-            "soil_ph_max": 7.5,
-            "water_needs": "medium",
-            "sun_exposure": "partial_sun",
-            "maintenance_level": "medium",
-            "bloom_period": "late_spring",
-            "foliage_color": "green",
-            "is_native": False,
-            "price_range": "medium"
+            "height_adult_min_cm": 300,
+            "height_adult_max_cm": 800,
+            "width_adult_min_cm": 200,
+            "width_adult_max_cm": 400,
+            "water_need": "moderate",
+            "sun_exposure": "partial_shade",
+            "growth_rate": "fast",
+            "foliage": "deciduous",
+            "flowering_months": [5, 6],
+            "flowering_color": "blanc,rose",
+            "frost_resistance_min_c": -15,
+            "soil_preference": {"ph_min": 6.0, "ph_max": 7.5, "type": "neutre"},
+            "is_drought_resistant": False,
+            "attracts_pollinators": True,
+            "is_invasive": False
+        },
+        
+        # PLANTES TROPICALES
+        {
+            "name_common_fr": "Monstera",
+            "name_latin": "Monstera deliciosa",
+            "family": plant_families["Araceae"],
+            "type": "perennial",
+            "climate_zones": ["Tropical"],
+            "height_adult_min_cm": 200,
+            "height_adult_max_cm": 500,
+            "width_adult_min_cm": 150,
+            "width_adult_max_cm": 300,
+            "water_need": "high",
+            "sun_exposure": "partial_shade",
+            "growth_rate": "fast",
+            "foliage": "evergreen",
+            "flowering_months": [],
+            "flowering_color": "",
+            "frost_resistance_min_c": 10,
+            "soil_preference": {"ph_min": 5.5, "ph_max": 7.0, "type": "humifère"},
+            "is_drought_resistant": False,
+            "attracts_pollinators": False,
+            "is_invasive": False
+        },
+        {
+            "name_common_fr": "Palmier Phoenix",
+            "name_latin": "Phoenix canariensis",
+            "family": plant_families["Arecaceae"],
+            "type": "tree",
+            "climate_zones": ["Tropical", "Méditerranéen"],
+            "height_adult_min_cm": 800,
+            "height_adult_max_cm": 1800,
+            "width_adult_min_cm": 600,
+            "width_adult_max_cm": 1000,
+            "water_need": "moderate",
+            "sun_exposure": "full_sun",
+            "growth_rate": "slow",
+            "foliage": "evergreen",
+            "flowering_months": [3, 4, 5],
+            "flowering_color": "jaune",
+            "frost_resistance_min_c": -5,
+            "soil_preference": {"ph_min": 6.0, "ph_max": 8.0, "type": "sableux"},
+            "is_drought_resistant": True,
+            "attracts_pollinators": False,
+            "is_invasive": False
+        },
+        {
+            "name_common_fr": "Hibiscus tropical",
+            "name_latin": "Hibiscus rosa-sinensis",
+            "family": plant_families["Malvaceae"],
+            "type": "shrub",
+            "climate_zones": ["Tropical"],
+            "height_adult_min_cm": 150,
+            "height_adult_max_cm": 400,
+            "width_adult_min_cm": 150,
+            "width_adult_max_cm": 300,
+            "water_need": "high",
+            "sun_exposure": "full_sun",
+            "growth_rate": "fast",
+            "foliage": "evergreen",
+            "flowering_months": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+            "flowering_color": "rouge,rose,jaune",
+            "frost_resistance_min_c": 5,
+            "soil_preference": {"ph_min": 6.0, "ph_max": 7.5, "type": "humifère"},
+            "is_drought_resistant": False,
+            "attracts_pollinators": True,
+            "is_invasive": False
         }
     ]
     
     created_count = 0
-    for plant_data in plants_data:
-        category = categories[plant_data["category"]]
-        plant_data["category"] = category
-        
-        # Conversion des zones climatiques en JSON
-        plant_data["climate_zones"] = plant_data["climate_zones"]
-        
+    for plant_data in plants_data:        
         plant, created = Plant.objects.get_or_create(
-            scientific_name=plant_data["scientific_name"],
+            name_latin=plant_data["name_latin"],
             defaults=plant_data
         )
         
         if created:
             created_count += 1
-            print(f"✅ Créé: {plant.name} ({plant.scientific_name})")
+            print(f"✅ Créé: {plant.name_common_fr} ({plant.name_latin})")
         else:
-            print(f"🔄 Existe: {plant.name}")
+            print(f"🔄 Existe: {plant.name_common_fr}")
     
     return created_count
 
@@ -301,27 +340,28 @@ def main():
     print("🌱 Populate Base de Données Plantes TerraSketch")
     print("="*50)
     
-    # Créer les catégories
-    print("\n📂 Création catégories...")
-    categories = create_plant_categories()
+    # Créer les familles
+    print("\n📂 Création familles de plantes...")
+    plant_families = create_plant_families()
     
     # Créer les plantes
     print(f"\n🌿 Création plantes...")
-    plant_count = create_essential_plants(categories)
+    plant_count = create_essential_plants(plant_families)
     
     # Statistiques finales
-    total_categories = PlantCategory.objects.count()
+    total_families = PlantFamily.objects.count()
     total_plants = Plant.objects.count()
     
     print(f"\n📊 Résumé:")
-    print(f"✅ Catégories: {total_categories}")
+    print(f"✅ Familles: {total_families}")
     print(f"✅ Plantes: {total_plants} ({plant_count} nouvelles)")
     
     # Répartition par zone climatique
     print(f"\n🌍 Répartition par zone:")
     zones = ["Atlantique", "Continental", "Méditerranéen", "Montagnard", "Tropical"]
     for zone in zones:
-        count = Plant.objects.filter(climate_zones__contains=[zone]).count()
+        # Version compatible SQLite - compter en Python
+        count = sum(1 for plant in Plant.objects.all() if zone in plant.climate_zones)
         print(f"  {zone}: {count} espèces")
     
     print(f"\n🎉 Base de données plantes prête pour le MVP!")

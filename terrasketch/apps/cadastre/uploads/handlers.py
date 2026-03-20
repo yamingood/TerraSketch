@@ -288,7 +288,7 @@ def _save_parcelle_to_db(result: Dict[str, Any], filename: str, user_id: int = N
 
 def _trigger_ign_enrichment(parcel_id: str, geojson_data: Dict[str, Any]):
     """
-    Déclenche l'enrichissement IGN en arrière-plan via Celery.
+    Déclenche l'enrichissement IGN (version synchrone pour MVP).
     
     Args:
         parcel_id: ID de la parcelle cadastrale
@@ -296,14 +296,40 @@ def _trigger_ign_enrichment(parcel_id: str, geojson_data: Dict[str, Any]):
     """
     try:
         # Import local pour éviter les dépendances circulaires
-        from apps.geography.tasks import enrich_with_ign
+        from integrations.ign_api import enrich_parcelle_with_ign
         
-        # Déclencher la tâche Celery asynchrone
-        task = enrich_with_ign.delay(parcel_id, geojson_data)
+        # Calculer le centre de la parcelle
+        geometry = geojson_data.get('geometry', {})
+        coordinates = geometry.get('coordinates', [])
         
-        logger.info(f"Tâche IGN déclenchée pour parcelle {parcel_id}: task_id={task.id}")
-        
+        if coordinates and len(coordinates) > 0:
+            # Première ring du polygone
+            ring = coordinates[0]
+            if ring:
+                # Calculer le centroïde simple
+                lons = [point[0] for point in ring]
+                lats = [point[1] for point in ring]
+                center_lon = sum(lons) / len(lons)
+                center_lat = sum(lats) / len(lats)
+                
+                # Enrichissement IGN synchrone
+                ign_data = enrich_parcelle_with_ign(center_lon, center_lat)
+                
+                if ign_data.get('ign_enriched'):
+                    logger.info(f"Enrichissement IGN réussi pour parcelle {parcel_id}: "
+                               f"topographie={bool(ign_data.get('topographie'))}, "
+                               f"erreurs={len(ign_data.get('erreurs', []))}")
+                else:
+                    logger.warning(f"Enrichissement IGN partiel pour parcelle {parcel_id}: "
+                                 f"erreurs={ign_data.get('erreurs', [])}")
+                
+                # TODO: Sauvegarder les données IGN en base pour usage futur
+                # Pour l'instant, juste log
+                
+        else:
+            logger.warning(f"Impossible d'enrichir {parcel_id}: coordonnées invalides")
+            
     except ImportError as e:
-        logger.warning(f"Module geography non disponible - enrichissement IGN ignoré: {e}")
+        logger.warning(f"Module IGN non disponible - enrichissement ignoré: {e}")
     except Exception as e:
         logger.error(f"Erreur déclenchement enrichissement IGN {parcel_id}: {e}")

@@ -1,8 +1,8 @@
 # 🎯 TerraSketch - Résumé de Progression
 
-**Date:** 19 mars 2026  
-**Session:** Configuration API et Endpoints  
-**Status:** MVP 85% Prêt 🚀
+**Date:** 20 mars 2026  
+**Session:** Intégration API IGN/Géoplateforme + Aperçu Parcelles
+**Status:** MVP 90% Prêt 🚀
 
 ---
 

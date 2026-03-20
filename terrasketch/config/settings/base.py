@@ -249,3 +249,16 @@ LOGGING = {
 # Create logs directory
 LOG_DIR = BASE_DIR / 'logs'
 LOG_DIR.mkdir(exist_ok=True)
+
+# API IGN/Géoplateforme Configuration
+IGN_API_KEY = os.getenv('IGN_API_KEY', 'essentiels')  # Clé par défaut pour tests
+
+# URLs correctes des services IGN (nouvelles APIs)
+IGN_SERVICES = {
+    'geocodage': 'https://data.geopf.fr/geocodage/search',
+    'reverse_geocoding': 'https://data.geopf.fr/geocodage/reverse',
+    'altimetrie': 'https://data.geopf.fr/altimetrie/resources',
+    'cadastre': 'https://apicarto.ign.fr/api/wfs-geoportail/search',
+    'isochrone': 'https://data.geopf.fr/navigation/isochrone',
+    'itineraire': 'https://data.geopf.fr/navigation/itineraire'
+}

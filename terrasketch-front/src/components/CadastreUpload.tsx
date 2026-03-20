@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { Upload, FileText, CheckCircle, XCircle, AlertCircle, Map } from 'lucide-react';
+import ParcellePreview from './ParcellePreview';
 
 interface CadastreUploadProps {
   onParcellConfirmed?: (parcelle: any) => void;
@@ -59,7 +60,7 @@ const CadastreUpload: React.FC<CadastreUploadProps> = ({
       const formData = new FormData();
       formData.append('cadastre_file', file);
 
-      const response = await fetch('/api/cadastre/upload/', {
+      const response = await fetch('http://localhost:8001/api/cadastre/upload/', {
         method: 'POST',
         body: formData,
       });
@@ -228,21 +229,43 @@ const CadastreUpload: React.FC<CadastreUploadProps> = ({
   if (state.status === 'preview' && state.parcelle) {
     const { parcelle } = state;
     
+    // Transformer les données de l'API en format attendu par ParcellePreview
+    const coordinates = parcelle.geojson?.geometry?.coordinates || [];
+    
+    // Calculer les bounds depuis les coordonnées
+    let bounds = { minX: 0, maxX: 1, minY: 0, maxY: 1 };
+    if (coordinates.length > 0 && coordinates[0] && Array.isArray(coordinates[0])) {
+      const allCoords = coordinates[0]; // Premier ring du polygone
+      if (allCoords.length > 0) {
+        bounds = {
+          minX: Math.min(...allCoords.map((coord: number[]) => coord[0])),
+          maxX: Math.max(...allCoords.map((coord: number[]) => coord[0])),
+          minY: Math.min(...allCoords.map((coord: number[]) => coord[1])),
+          maxY: Math.max(...allCoords.map((coord: number[]) => coord[1]))
+        };
+      }
+    }
+    
+    const parcelleData = {
+      geometry: {
+        type: 'Polygon',
+        coordinates: coordinates
+      },
+      properties: {
+        commune: parcelle.commune,
+        section: parcelle.section,
+        numero: parcelle.numero,
+        surface: parcelle.surface_m2
+      },
+      bounds: bounds
+    };
+    
     return (
       <div className="w-full max-w-4xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* Carte (simulée pour MVP) */}
+          {/* Aperçu de la parcelle */}
           <div className="lg:col-span-2">
-            <div className="border rounded-lg p-4 h-64 bg-green-50 flex items-center justify-center">
-              <Map className="h-16 w-16 text-green-600 mb-2" />
-              <div className="text-center text-green-700">
-                <p className="font-medium">Parcelle détectée</p>
-                <p className="text-sm">Surface: {parcelle.surface_m2?.toFixed(0)} m²</p>
-                <p className="text-xs mt-2">
-                  💡 La carte sera intégrée dans la version finale
-                </p>
-              </div>
-            </div>
+            <ParcellePreview parcelle={parcelleData} />
           </div>
 
           {/* Informations */}
