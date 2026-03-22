@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { Upload, FileText, CheckCircle, XCircle, AlertCircle, Map } from 'lucide-react';
-import ParcellePreview from './ParcellePreview';
+import ParcelleMapPreview from './ParcelleMapPreview';
 
 interface CadastreUploadProps {
   onParcellConfirmed?: (parcelle: any) => void;
@@ -252,10 +252,11 @@ const CadastreUpload: React.FC<CadastreUploadProps> = ({
         coordinates: coordinates
       },
       properties: {
+        id_parcelle: parcelle.id_parcelle,
         commune: parcelle.commune,
         section: parcelle.section,
         numero: parcelle.numero,
-        surface: parcelle.surface_m2
+        surface_m2: parcelle.surface_m2
       },
       bounds: bounds
     };
@@ -265,7 +266,7 @@ const CadastreUpload: React.FC<CadastreUploadProps> = ({
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Aperçu de la parcelle */}
           <div className="lg:col-span-2">
-            <ParcellePreview parcelle={parcelleData} />
+            <ParcelleMapPreview parcelle={parcelleData} />
           </div>
 
           {/* Informations */}

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Leaflet</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+</head>
+<body>
+    <div id="map" style="height: 400px; width: 100%;"></div>
+    
+    <script>
+        // Test simple avec les données de notre API
+        const map = L.map('map').setView([48.8535, 2.37], 16);
+        
+        // Couche de base OpenStreetMap
+        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap'
+        }).addTo(map);
+        
+        // Données test (format retourné par l'API)
+        const testData = {
+            "type": "Feature",
+            "geometry": {
+                "type": "Polygon", 
+                "coordinates": [[2.37,48.8535],[2.3705,48.8535],[2.3705,48.854],[2.37,48.854],[2.37,48.8535]]
+            },
+            "properties": {
+                "id_parcelle": "75111000CB0026",
+                "surface_m2": 2039.8,
+                "commune": "Paris 11e"
+            }
+        };
+        
+        // Transformer en format GeoJSON standard
+        const normalizedData = {
+            ...testData,
+            geometry: {
+                ...testData.geometry,
+                coordinates: [testData.geometry.coordinates] // Encapsuler dans un array
+            }
+        };
+        
+        console.log('Données normalisées:', normalizedData);
+        
+        // Ajouter la parcelle
+        const parcelleLayer = L.geoJSON(normalizedData, {
+            style: {
+                fillColor: '#3B82F6',
+                weight: 3,
+                opacity: 1,
+                color: '#1E40AF',
+                fillOpacity: 0.3
+            }
+        }).addTo(map);
+        
+        // Centrer sur la parcelle
+        map.fitBounds(parcelleLayer.getBounds());
+        
+        console.log('Test réussi !');
+    </script>
+</body>
+</html>

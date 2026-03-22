@@ -1,0 +1,20 @@
+{
+  "type": "Feature",
+  "properties": {
+    "id_parcelle": "75111000CB0026",
+    "commune": "Paris 11e", 
+    "section": "CB",
+    "numero": "0026",
+    "surface_m2": 335
+  },
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [[
+      [2.370000, 48.853500],
+      [2.370500, 48.853500], 
+      [2.370500, 48.854000],
+      [2.370000, 48.854000],
+      [2.370000, 48.853500]
+    ]]
+  }
+}

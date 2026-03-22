@@ -30,6 +30,7 @@ const OnboardingPage: React.FC = () => {
   const navigate = useNavigate();
   
   const [currentStep, setCurrentStep] = useState(1);
+  const [dragActive, setDragActive] = useState(false);
   const [projectData, setProjectData] = useState<ProjectData>({
     name: '',
     file: undefined,
@@ -187,8 +188,8 @@ const OnboardingPage: React.FC = () => {
       //   body: JSON.stringify(projectData)
       // });
       
-      // Redirection vers la page d'accueil (pour éviter le problème d'import temporairement)
-      navigate('/');
+      // Redirection vers le tableau de bord
+      navigate('/dashboard');
     } catch (error) {
       console.error('Erreur lors de la création du projet:', error);
       // TODO: Afficher une notification d'erreur

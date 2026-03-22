@@ -4,7 +4,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 import OnboardingPage from './pages/OnboardingPage';
 import PlanVisualizationPage from './pages/PlanVisualizationPage';
-// import DashboardPage from './pages/dashboard/DashboardPage'; // Temporairement désactivé à cause d'un problème d'import
+import DashboardPage from './pages/dashboard/DashboardPage';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -24,8 +24,8 @@ const App: React.FC = () => {
             {/* Page d'onboarding comme point d'entrée principal */}
             <Route path="/onboarding" element={<OnboardingPage />} />
             
-            {/* Page dashboard (accueil) - temporairement désactivée */}
-            {/* <Route path="/dashboard" element={<DashboardPage />} /> */}
+            {/* Page dashboard (accueil) */}
+            <Route path="/dashboard" element={<DashboardPage />} />
             
             {/* Page de visualisation des plans */}
             <Route path="/plan/:planId" element={<PlanVisualizationPage />} />
