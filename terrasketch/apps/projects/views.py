@@ -314,6 +314,32 @@ def generate_ai_plan(request, project_id):
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
+def project_current_plan(request, project_id):
+    """
+    GET /api/projects/{project_id}/plan/
+    Retourne le dernier plan IA généré pour ce projet.
+    """
+    from apps.ai.models import Plan as AIPlan
+
+    project = get_object_or_404(Project, id=project_id, user=request.user)
+    plan = AIPlan.objects.filter(project=project, is_current=True).first()
+
+    if not plan:
+        return Response({'detail': 'Aucun plan généré pour ce projet.'}, status=status.HTTP_404_NOT_FOUND)
+
+    return Response({
+        'id': str(plan.id),
+        'version': plan.version,
+        'plan_json': plan.plan_json,
+        'generated_at': plan.generated_at.isoformat(),
+        'ai_model': plan.ai_model,
+        'input_tokens': plan.input_tokens,
+        'output_tokens': plan.output_tokens,
+    })
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
 def generation_status(request, project_id, job_id):
     """
     GET /api/projects/{project_id}/generate/{job_id}/

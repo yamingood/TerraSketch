@@ -1,239 +1,252 @@
 # 🎯 TerraSketch - Résumé de Progression
 
-**Date:** 20 mars 2026  
-**Session:** Intégration API IGN/Géoplateforme + Aperçu Parcelles
-**Status:** MVP 90% Prêt 🚀
+**Date:** 31 mars 2026
+**Session:** Dashboard Admin + Vue 3D + Base plantes + Connexion API réelle
+**Status:** MVP 95% Prêt 🚀
 
 ---
 
-## ✅ **Réalisations de cette Session**
+## ✅ **Réalisations — Session 31 mars 2026**
 
-### 1. **🗺️ Intégration API IGN/Géoplateforme - COMPLET ⭐**
-- ✅ **Géocodage IGN** : 96.5% de précision pour adresses françaises
-  - API `data.geopf.fr/geocodage/search` fonctionnelle
-  - Résolution "Place de la Bastille" → 48.853711, 2.370213
-- ✅ **Cadastre officiel IGN** : Récupération parcelles réelles
-  - API `apicarto.ign.fr/api/wfs-geoportail/search` opérationnelle
-  - Sources multiples : CADASTRALPARCELS.PARCELLAIRE_EXPRESS, BDTOPO_V3
-  - Test validé : Parcelle 75111000CB0026 (335 m²) récupérée
-- ✅ **Service IGN complet** configuré avec URLs officielles
-- ✅ **Enrichissement automatique** lors uploads cadastraux
+### 1. **🔐 Dashboard Admin complet**
+- ✅ Page `/admin` avec login dédié (vérifie `is_staff` + `role=admin`)
+- ✅ Sidebar 4 sections : Vue d'ensemble / Utilisateurs / Projets / Génération IA
+- ✅ KPI cards : total users, abonnements actifs, projets, jobs IA
+- ✅ Gestion utilisateurs : table + recherche + filtre rôle + activation/désactivation
+- ✅ Table projets avec filtre statut + plans IA générés
+- ✅ Table jobs IA avec barre de progression + messages d'erreur
+- ✅ Backend : `apps/backoffice/` → 5 endpoints REST protégés par `IsAdminUser`
+- ✅ Compte admin créé : `admin@terrasketch.fr` / `Admin1234!`
 
-**Test validé :**
-```
-🗺️  Géocodage: Place de la Bastille → 96.5% précision
-🗂️  Cadastre: Parcelle 75111000CB0026 - Section CB - 335 m²
-📋 Propriétés: gid, numero, section, commune, surface, insee
-✅ API IGN entièrement fonctionnelle !
-```
+### 2. **🌱 Base de données plantes (37 espèces)**
+- ✅ Fixture Django : 10 familles botaniques + 25 plantes françaises réelles
+- ✅ Plantes : Olivier, Lavande, Cyprès, Romarin, Palmier, Bambou, Rhododendron, Hêtre, Cerisier du Japon, Pivoine, Thym, Agapanthe…
+- ✅ Données complètes : type, taille adulte, rusticité (°C min), exposition, eau, zones climatiques
+- ✅ Affinités de style par plante (méditerranéen, japonais, champêtre, contemporain, tropical)
 
-### 2. **📱 Aperçu Parcelles après Upload - COMPLET**
-- ✅ **Composant ParcellePreview** créé avec Canvas HTML5
-- ✅ **Visualisation géométrique** : rendu polygones sur canvas
-- ✅ **Transformation coordonnées** automatique pour affichage
-- ✅ **Intégration CadastreUpload** : aperçu immédiat post-upload
-- ✅ **Gestion erreurs** : fallback si géométrie invalide
-- ✅ **Calcul bounds** dynamique depuis coordonnées
+### 3. **📊 Dashboard utilisateur — données réelles**
+- ✅ Connexion à `/api/projects/` et `/api/projects/dashboard/stats/`
+- ✅ Sidebar complète + KPI cards (projets totaux / en cours / terminés)
+- ✅ Bouton "Générer IA" par projet avec barre de progression live (polling 2s)
+- ✅ Skeletons de chargement + gestion erreurs
+- ✅ Couche API centralisée : `src/api/client.ts`
 
-### 3. **🔄 Flux Onboarding Complet - FINALISÉ**
-- ✅ **Redirection dashboard** après formulaire complété
-- ✅ **Route `/dashboard`** ajoutée et fonctionnelle
-- ✅ **Navigation fluide** : Upload → Aperçu → Dashboard
-- ✅ **Formulaire onboarding** entièrement intégré
+### 4. **🌳 Vue 3D isométrique (canvas natif, sans dépendance)**
+- ✅ Projection isométrique 30° sur canvas HTML5
+- ✅ Terrain herbu + gradient ciel + grille 3D
+- ✅ Arbres : tronc + couronne ellipsoïde multi-couches avec ombres
+- ✅ Arbustes/vivaces : dômes 3D
+- ✅ Algorithme du peintre (tri back-to-front) + sélection au clic
+- ✅ Zoom + / −
 
-### 4. **🧪 Tests et Validation - COMPLET**
-- ✅ **Script test IGN** (`test_ign_integration.py`) fonctionnel
-- ✅ **Validation end-to-end** : Upload → Parser → IGN → Aperçu
-- ✅ **Configuration test** (`cadastre_test.py`) isolée
-- ✅ **APIs testées** : Géocodage + Cadastre + Altimétrie
+### 5. **📋 PlanVisualizationPage — 5 onglets complets**
+- ✅ **Plan** : viewer 2D/3D + conseils IA + infos génération (tokens)
+- ✅ **Plantes** : liste détaillée avec justifications IA
+- ✅ **Budget** : total HT + phases détaillées avec travaux
+- ✅ **Entretien** : calendrier mensuel (mois courant mis en avant)
+- ✅ **Évolution** : simulation temporelle 3 mois → 5 ans
+- ✅ Connexion à `/api/projects/{id}/plan/` + fallback plan démo
+- ✅ Export PNG canvas
+- ✅ Endpoint Django ajouté : `GET /api/projects/{id}/plan/`
+
+### 6. **⚙️ Infrastructure dev**
+- ✅ `.claude/launch.json` : configs serveurs Vite (5173) + Django (8000)
+- ✅ Django configuré sur `0.0.0.0:8000` (fix IPv4/IPv6 localhost)
 
 ---
 
-## 🏗️ **Architecture Actuelle Complète**
+## 🏗️ **Architecture Actuelle**
 
 ### **Backend Django (terrasketch/)**
 ```
-✅ apps/accounts/     - Auth JWT + organisations
-✅ apps/projects/     - Projets + parcelles + analyse terrain
-✅ apps/ai/           - Génération IA complète
-  ✅ context/         - Assemblage climat + solar + plantes  
-  ✅ prompt/          - Construction prompts Claude
-  ✅ generator/       - Client Claude + streaming
-  ✅ models.py        - Jobs + Plans + Quotas + Cache
-✅ apps/cadastre/     - Upload + parsing fichiers
-  ✅ services/        - Parseurs GeoJSON/Shapefile/DXF/EDIGEO
-  ✅ uploads/         - Handlers + validation
-✅ apps/plants/       - Base données végétaux
-✅ apps/geography/    - Services IGN + altimétrie
-✅ integrations/      - API IGN/Géoplateforme complète  
-  ✅ ign_api.py       - Géocodage + Cadastre + Altimétrie
-✅ apps/budget/       - Calculs coûts (structure)
+✅ apps/accounts/       - Auth JWT + organisations + abonnements
+✅ apps/projects/       - Projets + parcelles + analyse terrain + génération IA
+✅ apps/ai/             - Génération IA complète
+  ✅ context/           - Assemblage climat + solar + plantes
+  ✅ prompt/            - Construction prompts Claude + output schema
+  ✅ generator/         - Client Claude + streaming
+  ✅ models.py          - Jobs + Plans + Quotas + Cache
+✅ apps/cadastre/       - Upload + parsing fichiers (GeoJSON/Shapefile/DXF/EDIGÉO)
+✅ apps/plants/         - Base données 37 plantes + familles + styles
+  ✅ fixtures/          - plants_initial.json (25 nouvelles plantes)
+✅ apps/geography/      - Services IGN + altimétrie
+✅ integrations/        - API IGN/Géoplateforme complète
+✅ apps/budget/         - Calculs coûts (structure)
+✅ apps/backoffice/     - Dashboard admin API (stats/users/projects/ai-jobs)
 ```
 
 ### **Frontend React (terrasketch-front/)**
 ```
-✅ pages/auth/           - Login/Register
-✅ pages/dashboard/      - Tableau de bord
-✅ pages/OnboardingPage  - Upload cadastre + aperçu
-✅ components/ParcellePreview - Visualisation Canvas
-✅ components/           - CadastreUpload + forms
-✅ stores/               - State management
-✅ api/                  - Services HTTP
+✅ pages/auth/              - Login/Register
+✅ pages/dashboard/         - Dashboard avec vrais projets + KPIs + génération IA
+✅ pages/admin/             - Dashboard admin complet (4 sections)
+✅ pages/OnboardingPage     - Upload cadastre + aperçu
+✅ pages/PlanVisualizationPage - 5 onglets (Plan/Plantes/Budget/Entretien/Évolution)
+✅ components/plan/         - PlanViewer 2D + 3D isométrique, PlanControls, PlanInfo
+✅ components/ParcellePreview  - Visualisation Canvas
+✅ api/client.ts            - Couche API centralisée avec JWT
 ```
 
 ### **APIs REST Disponibles**
 ```
-✅ POST /api/auth/login/                    - Connexion
-✅ POST /api/auth/register/                 - Inscription  
-✅ POST /api/cadastre/upload/               - Upload fichier cadastral
-✅ GET  /api/cadastre/status/               - Info formats supportés
-✅ GET  /api/projects/                      - Liste projets
-✅ POST /api/projects/                      - Création projet
-✅ POST /api/projects/{id}/generate/        - Génération IA ⭐
-✅ GET  /api/projects/{id}/generate/{job}/  - Statut génération ⭐
-✅ GET  /api/projects/dashboard/stats/      - Stats dashboard
+✅ POST /api/auth/login/                          - Connexion
+✅ POST /api/auth/register/                       - Inscription
+✅ POST /api/cadastre/upload/                     - Upload fichier cadastral
+✅ GET  /api/projects/                            - Liste projets utilisateur
+✅ POST /api/projects/                            - Création projet
+✅ GET  /api/projects/dashboard/stats/            - Stats dashboard
+✅ POST /api/projects/{id}/generate/              - Génération IA ⭐
+✅ GET  /api/projects/{id}/generate/{job}/        - Statut génération ⭐
+✅ GET  /api/projects/{id}/plan/                  - Plan courant du projet (NEW)
+✅ GET  /api/plants/                              - Liste plantes + filtres
+✅ GET  /api/backoffice/stats/                    - Stats admin
+✅ GET  /api/backoffice/users/                    - Liste utilisateurs admin
+✅ PATCH /api/backoffice/users/{id}/              - Modifier utilisateur admin
+✅ GET  /api/backoffice/projects/                 - Liste projets admin
+✅ GET  /api/backoffice/ai-jobs/                  - Jobs IA admin
 ```
 
 ---
 
-## 🎯 **Status MVP : 90% PRÊT**
+## 🎯 **Status MVP : 95% PRÊT**
 
 ### **✅ Modules Terminés**
-1. **Authentification complète** (JWT + refresh tokens)
-2. **Upload cadastre** (GeoJSON + validation + parsing + aperçu)
-3. **Système IA complet** (context + prompt + generator)
-4. **API génération plans** (endpoints + validation + jobs)
-5. **Frontend base** (React + auth + dashboard + upload)
-6. **Configuration projet** (settings + env + déploiement)
-7. **🗺️ Intégration IGN/Géoplateforme** (géocodage + cadastre + enrichissement)
-8. **📱 Aperçu parcelles** (Canvas + visualisation post-upload)
-9. **🔄 Flux onboarding complet** (upload → aperçu → dashboard)
-
-### **🔧 Manque pour MVP Fonctionnel**
-
-#### **Priorité 1 - Critique (30 min)**
-1. **🔑 Clé API Anthropic** - Remplacer placeholder dans `.env.local`
-2. **🔗 Test end-to-end** - Upload fichier → génération plan
-
-#### **Priorité 2 - Important (1-2h)**  
-3. **📱 Page visualisation plan** - Affichage JSON généré
-4. **🌱 Base données plantes** - Quelques espèces pour tests
-
-#### **Priorité 3 - Améliorations**
-5. **🔄 WebSocket streaming** - Suivi temps réel (optionnel)
-6. **💰 Module budget** - Calculs coûts basiques
-7. **🖼️  Export PNG** - Génération images plans  
-8. **🚀 Déploiement** - Docker + Railway/Vercel
+1. Authentification complète (JWT + refresh tokens)
+2. Upload cadastre (GeoJSON + validation + parsing + aperçu)
+3. Système IA complet (context + prompt + generator)
+4. API génération plans (endpoints + validation + jobs)
+5. Frontend complet (React + auth + dashboard + upload + plan viewer)
+6. Intégration IGN/Géoplateforme (géocodage + cadastre + enrichissement)
+7. Aperçu parcelles (Canvas + visualisation post-upload)
+8. Flux onboarding complet (upload → aperçu → dashboard)
+9. **Dashboard Admin** (backoffice complet)
+10. **Base plantes** (37 espèces françaises avec données complètes)
+11. **Dashboard utilisateur** (données réelles + génération IA live)
+12. **Vue 3D isométrique** (canvas natif, arbres + arbustes)
+13. **PlanVisualizationPage** (5 onglets : plan + plantes + budget + entretien + évolution)
 
 ---
 
-## 🚀 **Prochaines Actions Immédiates**
+## 🚀 **Prochaines Étapes**
 
-### **ÉTAPE 1 - Activation API (5 min)**
-```bash
-# 1. Obtenir clé sur https://console.anthropic.com/
-# 2. Editer terrasketch/.env.local:
-ANTHROPIC_API_KEY=sk-ant-your-real-key-here
+### **Priorité 1 — Critique pour démo (1-2h)**
 
-# 3. Tester connexion:
-cd terrasketch && python test_anthropic_simple.py
-```
+#### 1.1 Authentification frontend complète
+- [ ] Page Login (`/login`) avec formulaire email/mot de passe
+- [ ] Page Register (`/register`) avec choix de rôle
+- [ ] Persistance du token JWT dans `localStorage`
+- [ ] Redirection automatique si non authentifié → `/login`
+- [ ] Déconnexion propre (clear token + redirect)
 
-### **ÉTAPE 2 - Test MVP Complet (10 min)**
-```bash
-# 1. Lancer backend:
-cd terrasketch && python manage.py runserver 8000
+#### 1.2 Activer la clé API Anthropic
+- [ ] Remplacer la clé dans `terrasketch/.env.local` :
+  ```
+  ANTHROPIC_API_KEY=sk-ant-votre-vraie-cle
+  ```
+- [ ] Tester le flow complet : Upload → Dashboard → Générer IA → Voir plan
 
-# 2. Lancer frontend:  
-cd terrasketch-front && npm run dev
+---
 
-# 3. Test workflow:
-#    ✅ Connexion utilisateur
-#    ✅ Upload fichier GeoJSON → Aperçu parcelle automatique
-#    ✅ Navigation dashboard après onboarding
-#    - Déclencher génération IA
-#    - Vérifier job créé
-```
+### **Priorité 2 — Fonctionnalités importantes (2-4h)**
 
-### **ÉTAPE 3 - Page Plan (1h)**
-```typescript
-// Créer terrasketch-front/src/pages/PlanDetailPage.tsx
-// Afficher plan JSON généré avec zones + plantes + budget
-```
+#### 2.1 Modèles 3D GLB pour les plantes
+- [ ] Télécharger 5-10 modèles depuis Poly Pizza / Quaternius (CC0)
+- [ ] Intégrer Three.js (ou react-three-fiber) dans PlanViewer3D
+- [ ] Remplacer les primitives canvas par de vrais GLB
+- [ ] Ajouter `Plant3DModel` en BDD pour lier plante ↔ fichier GLB
+
+#### 2.2 Module Budget réel
+- [ ] Créer `apps/budget/calculators.py` : tarifs unitaires plantes + terrassement
+- [ ] Endpoint `GET /api/projects/{id}/budget/` avec calcul automatique
+- [ ] Afficher le budget calculé dans l'onglet Budget du plan
+
+#### 2.3 Calendrier d'entretien personnalisé
+- [ ] Générer le calendrier depuis les `PlantCareTemplate` en BDD
+- [ ] Page dédiée `/calendrier` : vue mensuelle interactive
+- [ ] Notifications email mensuelles (optionnel)
+
+---
+
+### **Priorité 3 — Améliorations UX (2-3h)**
+
+#### 3.1 Onboarding amélioré
+- [ ] Formulaire de préférences (style jardin, budget, maintenance)
+- [ ] Prévisualisation temps réel de la parcelle sur carte Leaflet
+- [ ] Indicateur de progression (étape 1/3, 2/3, 3/3)
+
+#### 3.2 Export et partage
+- [ ] Export PDF du plan complet (plan + plantes + budget + calendrier)
+- [ ] Lien de partage public `/plan/share/{token}`
+- [ ] Export DXF pour architectes paysagistes
+
+#### 3.3 Génération IA améliorée
+- [ ] Streaming WebSocket temps réel (afficher les tokens au fur et à mesure)
+- [ ] Variantes de plan (générer 3 options)
+- [ ] Régénération partielle (modifier une zone uniquement)
+
+---
+
+### **Priorité 4 — Production (3-5h)**
+
+#### 4.1 Déploiement
+- [ ] Dockerfile backend + docker-compose (Django + PostgreSQL + Redis)
+- [ ] Configuration Railway (backend) + Vercel (frontend)
+- [ ] Variables d'environnement production
+- [ ] Migration vers PostgreSQL + PostGIS (géométries réelles)
+
+#### 4.2 Tests
+- [ ] Tests unitaires Django (models + serializers + views)
+- [ ] Tests E2E frontend (Playwright)
+- [ ] Test de charge génération IA (concurrence)
+
+#### 4.3 Stripe & Abonnements
+- [ ] Intégration Stripe Checkout pour plans payants
+- [ ] Webhooks Stripe → mise à jour `Subscription`
+- [ ] Page `/pricing` avec comparatif des plans
 
 ---
 
 ## 📊 **Métriques de Code**
 
 ```
-Backend Django:     ~9,500 lignes
-  - Apps:           8 modules fonctionnels + integrations
-  - Models:         15 modèles principaux 
-  - APIs:           12 endpoints REST
-  - IA System:      ~2,500 lignes (sophisticated)
-  - IGN Integration: ~500 lignes (complet)
+Backend Django:       ~11,000 lignes
+  - Apps:             9 modules fonctionnels + integrations + backoffice
+  - Models:           18 modèles principaux
+  - APIs:             17 endpoints REST
+  - IA System:        ~2,500 lignes (sophisticated)
+  - IGN Integration:  ~500 lignes
 
-Frontend React:     ~2,500 lignes
-  - Components:     9 composants principaux + ParcellePreview
-  - Pages:         6 pages fonctionnelles
-  - State mgmt:    3 stores (auth, projects, plants)
-  - Canvas rendering: HTML5 + coords transformation
+Frontend React:       ~4,500 lignes
+  - Components:       12 composants
+  - Pages:            8 pages fonctionnelles
+  - API layer:        client.ts centralisé
+  - Canvas 2D + 3D:   ~700 lignes (isometric renderer)
 
-Tests & Config:     ~1,200 lignes
-  - Scripts test:   6 scripts validation (+ IGN tests)
-  - Settings:       4 environnements (dev/prod/test/cadastre)
-  - Documentation:  Complète + README
+Base plantes:         37 espèces, 10 familles, 40 affinités de style
 ```
 
 ---
 
-## 🔧 **Architecture Technique Validée**
+## 🔧 **Lancer le projet**
 
-### **Système IA Sophistiqué ⭐**
-- **Context Builder**: Assemblage automatique terrain + climat + préférences
-- **Climate Service**: Intégration Open-Meteo + zones françaises  
-- **Solar Calculator**: Calculs PyDayLight + orientations optimales
-- **Plant Selector**: Compatibilité rusticité + préférences + climat
-- **Prompt Engineer**: Construction XML structuré pour Claude
-- **Claude Client**: API Anthropic + retry logic + streaming
+```bash
+# Backend Django
+cd terrasketch
+source venv/bin/activate
+python manage.py runserver 0.0.0.0:8000 --settings=config.settings.development
 
-### **Parsing Cadastral Robuste ⭐**
-- **Multi-format**: GeoJSON + Shapefile + DXF + EDIGÉO
-- **Validation**: Géométrie + surface + projection
-- **Enrichissement IGN**: Géocodage + Cadastre officiel + Topographie
-- **Aperçu immédiat**: Canvas HTML5 + transformation coordonnées
-- **Error Handling**: Messages utilisateur + logging technique
+# Frontend React
+cd terrasketch-front
+npm run dev
+```
 
-### **Frontend Moderne ⭐**  
-- **React 18** + TypeScript + Vite
-- **Tailwind CSS** + responsive design
-- **React Query** + state management optimisé
-- **File upload** + progress + error handling
+**Accès :**
+- App : http://localhost:5173
+- Admin : http://localhost:5173/admin  →  `admin@terrasketch.fr` / `Admin1234!`
+- Plan démo : http://localhost:5173/plan/demo-plan
+- API : http://localhost:8000/api/
 
 ---
 
-## 🎉 **Conclusion**
-
-**TerraSketch est à 90% d'un MVP fonctionnel !** 
-
-Les **API principales sont entièrement opérationnelles** :
-- ✅ Upload cadastre avec parsing multi-format + aperçu immédiat
-- ✅ Génération IA avec pipeline sophistiqué
-- ✅ **Intégration IGN/Géoplateforme** avec géocodage + cadastre officiel
-
-**Nouvelles fonctionnalités cette session :**
-- 🗺️ **Données géographiques officielles françaises** via API IGN
-- 📱 **Aperçu visuel des parcelles** immédiatement après upload
-- 🔄 **Flux onboarding complet** avec navigation fluide
-
-**Il ne manque que :**
-1. 🔑 Clé API Anthropic (5 min)
-2. 📱 Page affichage plan (1h)
-
-**Le système peut générer des plans IA enrichis avec données IGN dès aujourd'hui !** 🚀
-
----
-
-*Dernière mise à jour: 20 mars 2026, 03:45*  
-*Prêt pour démo client: **Oui, avec clé API** ✅*  
-*Données géographiques: **IGN/Géoplateforme intégrée** 🗺️*
+*Dernière mise à jour : 31 mars 2026*
+*MVP prêt pour démo : **Oui, avec clé API Anthropic** ✅*

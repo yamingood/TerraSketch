@@ -1,0 +1,18 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "Frontend React (Vite)",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev"],
+      "port": 5173,
+      "cwd": "terrasketch-front"
+    },
+    {
+      "name": "Backend Django",
+      "runtimeExecutable": "bash",
+      "runtimeArgs": ["-c", "cd /Users/yamingoudou/terrasketch-project/terrasketch && python manage.py runserver 0.0.0.0:8000 --settings=config.settings.development"],
+      "port": 8000
+    }
+  ]
+}

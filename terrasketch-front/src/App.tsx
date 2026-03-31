@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import OnboardingPage from './pages/OnboardingPage';
 import PlanVisualizationPage from './pages/PlanVisualizationPage';
 import DashboardPage from './pages/dashboard/DashboardPage';
+import AdminDashboardPage from './pages/admin/AdminDashboardPage';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -29,6 +30,9 @@ const App: React.FC = () => {
             
             {/* Page de visualisation des plans */}
             <Route path="/plan/:planId" element={<PlanVisualizationPage />} />
+
+            {/* Dashboard admin */}
+            <Route path="/admin" element={<AdminDashboardPage />} />
             
             {/* Redirection de toutes les routes vers onboarding */}
             <Route path="/" element={<Navigate to="/onboarding" replace />} />

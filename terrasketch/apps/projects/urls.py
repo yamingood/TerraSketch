@@ -18,5 +18,8 @@ urlpatterns = [
     
     # Génération IA
     path('<uuid:project_id>/generate/', views.generate_ai_plan, name='generate_ai_plan'),
-    path('<uuid:project_id>/generate/<uuid:job_id>/', views.generation_status, name='generation_status'),
+    path('<uuid:project_id>/generate/<str:job_id>/', views.generation_status, name='generation_status'),
+
+    # Plan courant
+    path('<uuid:project_id>/plan/', views.project_current_plan, name='project_current_plan'),
 ]
