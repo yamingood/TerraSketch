@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuthStore } from '../../stores/authStore';
 import { Eye, EyeOff, Loader2 } from 'lucide-react';
 
@@ -11,6 +11,8 @@ const LoginForm: React.FC = () => {
   
   const { login, isLoading } = useAuthStore();
   const navigate = useNavigate();
+  const location = useLocation();
+  const from = (location.state as any)?.from?.pathname || '/dashboard';
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -18,10 +20,11 @@ const LoginForm: React.FC = () => {
 
     try {
       await login(email, password);
-      navigate('/dashboard');
+      navigate(from, { replace: true });
     } catch (err: any) {
       setError(
-        err.response?.data?.message || 
+        err.message ||
+        err.response?.data?.message ||
         'Une erreur est survenue lors de la connexion'
       );
     }

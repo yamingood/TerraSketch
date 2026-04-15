@@ -1,10 +1,10 @@
 import { api } from '../lib/api';
-import { 
-  Plant, 
-  PlantFamily, 
-  PlantSearchFilters, 
+import type {
+  Plant,
+  PlantFamily,
+  PlantSearchFilters,
   PlantRecommendationResponse,
-  SearchFiltersOptions 
+  SearchFiltersOptions
 } from '../lib/types';
 
 export const plantsApi = {

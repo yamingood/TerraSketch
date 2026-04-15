@@ -1,7 +1,16 @@
 const API_BASE = 'http://localhost:8000/api';
 
 function getToken(): string | null {
-  return localStorage.getItem('access_token') || sessionStorage.getItem('admin_token');
+  // Zustand persist stores under 'auth-storage' as JSON
+  try {
+    const authStorage = localStorage.getItem('auth-storage');
+    if (authStorage) {
+      const parsed = JSON.parse(authStorage);
+      if (parsed?.state?.accessToken) return parsed.state.accessToken;
+    }
+  } catch {}
+  // Fallback: direct keys
+  return localStorage.getItem('accessToken') || sessionStorage.getItem('admin_token');
 }
 
 async function request<T>(

@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAuthStore } from '../../stores/authStore';
 import {
   Map, Plus, FileText, Settings, RefreshCw,
   Cpu, Clock, CheckCircle, XCircle, ChevronRight,
@@ -211,9 +212,10 @@ const DashboardPage: React.FC = () => {
     loadData();
   };
 
+  const { logout } = useAuthStore();
   const handleLogout = () => {
-    localStorage.removeItem('access_token');
-    navigate('/onboarding');
+    logout();
+    navigate('/login');
   };
 
   // ── KPI summary ──────────────────────────────────────────────────────────────
@@ -253,7 +255,7 @@ const DashboardPage: React.FC = () => {
           {[
             { icon: LayoutDashboard, label: 'Tableau de bord', active: true, onClick: () => {} },
             { icon: Plus, label: 'Nouveau projet', active: false, onClick: () => navigate('/onboarding') },
-            { icon: Leaf, label: 'Plantes', active: false, onClick: () => {} },
+            { icon: Leaf, label: 'Plantes', active: false, onClick: () => navigate('/plants') },
             { icon: Settings, label: 'Paramètres', active: false, onClick: () => {} },
           ].map(({ icon: Icon, label, active, onClick }) => (
             <button

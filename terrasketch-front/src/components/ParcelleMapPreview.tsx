@@ -117,7 +117,7 @@ const ParcelleMapPreview: React.FC<ParcelleMapPreviewProps> = ({
 
     try {
       // Validation et normalisation des coordonnées
-      let coords = parcelle.geometry.coordinates;
+      let coords: any = parcelle.geometry.coordinates;
       if (!coords || !Array.isArray(coords)) {
         throw new Error('Coordonnées invalides ou manquantes');
       }

@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { Upload, FileText, CheckCircle, XCircle, AlertCircle, Map } from 'lucide-react';
+import { Upload, FileText, CheckCircle, XCircle, AlertCircle } from 'lucide-react';
 import ParcelleMapPreview from './ParcelleMapPreview';
 
 interface CadastreUploadProps {

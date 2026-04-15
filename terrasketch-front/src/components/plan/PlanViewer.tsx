@@ -50,7 +50,7 @@ export const PlanViewer: React.FC<PlanViewerProps> = ({
 }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [scale, setScale] = useState(20); // pixels per meter
-  const [offset, setOffset] = useState({ x: 50, y: 50 });
+  const [offset, _setOffset] = useState({ x: 50, y: 50 });
 
   useEffect(() => {
     drawPlan();

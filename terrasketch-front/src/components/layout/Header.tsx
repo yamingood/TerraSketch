@@ -88,7 +88,7 @@ const Header: React.FC = () => {
                       <User className="h-5 w-5 text-primary-600" />
                     </div>
                     <span className="text-sm font-medium text-gray-700">
-                      {user?.firstName}
+                      {user?.first_name}
                     </span>
                   </button>
 
@@ -97,7 +97,7 @@ const Header: React.FC = () => {
                     <div className="py-2">
                       <div className="px-4 py-2 border-b">
                         <p className="text-sm font-medium text-gray-900">
-                          {user?.firstName} {user?.lastName}
+                          {user?.first_name} {user?.last_name}
                         </p>
                         <p className="text-sm text-gray-500">{user?.email}</p>
                       </div>

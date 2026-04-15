@@ -25,6 +25,21 @@ class Project(models.Model):
         ('premium', _('Premium')),
         ('prestige', _('Prestige')),
     ]
+
+    GARDEN_STYLE_CHOICES = [
+        ('contemporary', _('Contemporain')),
+        ('mediterranean', _('Méditerranéen')),
+        ('cottage', _('Cottage Anglais')),
+        ('japanese', _('Japonais')),
+        ('tropical', _('Tropical')),
+        ('naturel', _('Naturel')),
+    ]
+
+    MAINTENANCE_LEVEL_CHOICES = [
+        ('low', _('Faible — 1-2h/mois')),
+        ('medium', _('Modéré — 3-5h/mois')),
+        ('high', _('Intensif — 6h+/mois')),
+    ]
     
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     user = models.ForeignKey(
@@ -59,6 +74,20 @@ class Project(models.Model):
         _('gamme budget'),
         max_length=20,
         choices=BUDGET_TIER_CHOICES,
+        blank=True,
+        null=True
+    )
+    garden_style = models.CharField(
+        _('style de jardin'),
+        max_length=20,
+        choices=GARDEN_STYLE_CHOICES,
+        blank=True,
+        null=True
+    )
+    maintenance_level = models.CharField(
+        _('niveau d\'entretien'),
+        max_length=10,
+        choices=MAINTENANCE_LEVEL_CHOICES,
         blank=True,
         null=True
     )

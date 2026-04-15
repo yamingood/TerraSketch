@@ -3,15 +3,14 @@
   "configurations": [
     {
       "name": "Frontend React (Vite)",
-      "runtimeExecutable": "npm",
-      "runtimeArgs": ["run", "dev"],
-      "port": 5173,
-      "cwd": "terrasketch-front"
+      "runtimeExecutable": "/bin/sh",
+      "runtimeArgs": ["-c", "export PATH=/usr/local/bin:$PATH && cd /Users/yamingoudou/terrasketch-project/terrasketch-front && npm run dev"],
+      "port": 5173
     },
     {
       "name": "Backend Django",
-      "runtimeExecutable": "bash",
-      "runtimeArgs": ["-c", "cd /Users/yamingoudou/terrasketch-project/terrasketch && python manage.py runserver 0.0.0.0:8000 --settings=config.settings.development"],
+      "runtimeExecutable": "/bin/sh",
+      "runtimeArgs": ["-c", "cd /Users/yamingoudou/terrasketch-project/terrasketch && source venv/bin/activate && python manage.py runserver 0.0.0.0:8000 --settings=config.settings.development"],
       "port": 8000
     }
   ]

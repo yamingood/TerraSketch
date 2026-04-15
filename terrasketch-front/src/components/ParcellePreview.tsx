@@ -1,9 +1,5 @@
 import React, { useRef, useEffect } from 'react';
 
-interface Coordinates {
-  type: string;
-  coordinates: number[][][];
-}
 
 interface ParcelleGeometry {
   type: string;

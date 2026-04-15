@@ -13,7 +13,7 @@ interface RecommendationCriteria {
 
 const PlantRecommendationsPage: React.FC = () => {
   const { projectId } = useParams<{ projectId: string }>();
-  const { plants } = usePlantsStore();
+  const { plants: _plants } = usePlantsStore();
   
   const [criteria, setCriteria] = useState<RecommendationCriteria>({
     sun_exposure: 'partial_shade',

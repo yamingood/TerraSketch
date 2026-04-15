@@ -6,11 +6,15 @@ import OnboardingPage from './pages/OnboardingPage';
 import PlanVisualizationPage from './pages/PlanVisualizationPage';
 import DashboardPage from './pages/dashboard/DashboardPage';
 import AdminDashboardPage from './pages/admin/AdminDashboardPage';
+import LoginPage from './pages/auth/LoginPage';
+import RegisterPage from './pages/auth/RegisterPage';
+import ProtectedRoute from './components/auth/ProtectedRoute';
+import PlantsPage from './pages/PlantsPage';
 
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      staleTime: 5 * 60 * 1000, // 5 minutes
+      staleTime: 5 * 60 * 1000,
       retry: false,
     },
   },
@@ -22,21 +26,30 @@ const App: React.FC = () => {
       <Router>
         <div className="min-h-screen bg-gray-50">
           <Routes>
-            {/* Page d'onboarding comme point d'entrée principal */}
-            <Route path="/onboarding" element={<OnboardingPage />} />
-            
-            {/* Page dashboard (accueil) */}
-            <Route path="/dashboard" element={<DashboardPage />} />
-            
-            {/* Page de visualisation des plans */}
-            <Route path="/plan/:planId" element={<PlanVisualizationPage />} />
+            {/* Routes publiques */}
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/register" element={<RegisterPage />} />
 
-            {/* Dashboard admin */}
-            <Route path="/admin" element={<AdminDashboardPage />} />
-            
-            {/* Redirection de toutes les routes vers onboarding */}
-            <Route path="/" element={<Navigate to="/onboarding" replace />} />
-            <Route path="*" element={<Navigate to="/onboarding" replace />} />
+            {/* Routes protégées */}
+            <Route path="/onboarding" element={
+              <ProtectedRoute><OnboardingPage /></ProtectedRoute>
+            } />
+            <Route path="/dashboard" element={
+              <ProtectedRoute><DashboardPage /></ProtectedRoute>
+            } />
+            <Route path="/plan/:planId" element={
+              <ProtectedRoute><PlanVisualizationPage /></ProtectedRoute>
+            } />
+            <Route path="/admin" element={
+              <ProtectedRoute requireAdmin><AdminDashboardPage /></ProtectedRoute>
+            } />
+            <Route path="/plants" element={
+              <ProtectedRoute><PlantsPage /></ProtectedRoute>
+            } />
+
+            {/* Redirections */}
+            <Route path="/" element={<Navigate to="/dashboard" replace />} />
+            <Route path="*" element={<Navigate to="/dashboard" replace />} />
           </Routes>
         </div>
       </Router>
